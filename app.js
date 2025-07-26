@@ -40,3 +40,33 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // ✨ If we're on login.html
+  if (path.includes("login.html")) {
+    const form = document.querySelector("form");
+    const emailInput = document.getElementById("emailInput");
+    const passwordInput = document.getElementById("passwordInput");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        alert("Login failed: " + error.message);
+      } else {
+        alert("Login successful!");
+        console.log("User info:", data.user);
+        // Optional: redirect to dashboard
+        // window.location.href = "dashboard.html";
+      }
+    });
+  }
+});
+
