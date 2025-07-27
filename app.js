@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
 
   // ✨ If we're on signup.html
-  if (path.includes("signup.html")) {
+ if (path.includes("index.html")) {
     const form = document.querySelector("form");
     const nameInput = document.getElementById("nameInput");
     const emailInput = document.getElementById("emailInput");
