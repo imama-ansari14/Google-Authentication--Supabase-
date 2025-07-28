@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
 
   // ✨ If we're on signup.html
- if (path.includes("index.html")) {
+  if (path.includes("index.html")) {
     const form = document.querySelector("form");
     const nameInput = document.getElementById("nameInput");
     const emailInput = document.getElementById("emailInput");
@@ -63,10 +63,27 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         alert("Login successful!");
         console.log("User info:", data.user);
-        // Optional: redirect to dashboard
-        // window.location.href = "dashboard.html";
       }
     });
   }
 });
 
+// SIGNUP WITH GOOGLE FUNCTIONALITY
+// Hook the button
+document.getElementById('googleSignUp').addEventListener('click', async () => {
+ const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin, // Or your custom redirect URL
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+      },
+    },
+  });
+  if (error) {
+    console.error('Google Sign-In Error:', error.message);
+  } else {
+    console.log('Redirecting to Google...');
+  }
+});
