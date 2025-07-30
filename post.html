@@ -60,7 +60,44 @@
         crossorigin="anonymous"></script>
     <!-- SupaBase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-   
+    <!-- JS File -->
+    <script>// Initialize Supabase client like you did before
+        const supabaseUrl = "https://srsupgbjukxifyfmdcep.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyc3VwZ2JqdWt4aWZ5Zm1kY2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0Mzg3ODUsImV4cCI6MjA2NzAxNDc4NX0.-yMtzbLPOU_R10ysCz1-sDwl2B4dkvWMU7--R5Zy9Wg";
+        const { createClient } = supabase;
+        const supabaseClient = createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById("postForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById("title").value;
+            const content = document.getElementById("content").value;
+            const image = document.getElementById("image").value;
+
+            // Get logged in user (optional if post needs user info)
+            const {
+                data: { session },
+            } = await supabaseClient.auth.getSession();
+
+            const userId = session?.user?.id;
+
+            const { data, error } = await supabaseClient.from("posts").insert([
+                {
+                    title,
+                    content,
+                    image,
+                    user_id: userId, // Must match your table schema
+                },
+            ]);
+
+            if (error) {
+                alert("Post failed: " + error.message);
+            } else {
+                alert("Post created successfully!");
+                window.location.href = "home.html"; // or redirect wherever you want
+            }
+        });
+    </script>
   
 </body>
 
