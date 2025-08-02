@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         alert("Signup successful!");
         console.log("User data:", data);
-        window.location.href = "post.html"; // ✅ Redirect after signup
+        window.location.href = "post.html"; 
       }
     });
   }
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         alert("Login successful!");
         console.log("User info:", data.user);
-        window.location.href = "post.html"; // ✅ Redirect after login
+        window.location.href = "post.html"; 
       }
     });
   }
@@ -75,7 +75,7 @@ document.getElementById('googleSignUp').addEventListener('click', async () => {
   const { data, error } = await supabaseClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${window.location.origin}/post.html`, // ✅ Redirect after Google login
+      redirectTo: `${window.location.origin}/post.html`, 
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
