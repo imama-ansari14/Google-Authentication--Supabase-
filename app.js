@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         alert("Signup successful!");
         console.log("User data:", data);
-        window.location.href = "post.html"; 
+        window.location.href = "post.html";
       }
     });
   }
@@ -64,28 +64,30 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         alert("Login successful!");
         console.log("User info:", data.user);
-        window.location.href = "post.html"; 
+        window.location.href = "post.html";
       }
     });
   }
-});
+  // ✨ GOOGLE SIGN-IN
+  const googleBtn = document.getElementById('googleSignUp');
+  if (googleBtn) {
+    googleBtn.addEventListener('click', async () => {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/post.html`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        },
+      });
 
-// ✨ GOOGLE SIGN-IN
-document.getElementById('googleSignUp').addEventListener('click', async () => {
-  const { data, error } = await supabaseClient.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/post.html`, 
-      queryParams: {
-        access_type: 'offline',
-        prompt: 'consent',
-      },
-    },
-  });
-
-  if (error) {
-    console.error('Google Sign-In Error:', error.message);
-  } else {
-    console.log('Redirecting to Google...');
+      if (error) {
+        console.error('Google Sign-In Error:', error.message);
+      } else {
+        console.log('Redirecting to Google...');
+      }
+    });
   }
-});
+
