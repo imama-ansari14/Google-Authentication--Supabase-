@@ -91,3 +91,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+// ✨ POST PAGE FUNCTIONALITY
+  if (path.includes("post.html")) {
+    const postForm = document.getElementById("postForm");
+    const titleInput = document.getElementById("title");
+    const contentInput = document.getElementById("content");
+    const charCount = document.getElementById("charCount");
+
+    // Character counter
+    if (contentInput && charCount) {
+      contentInput.addEventListener("input", () => {
+        charCount.textContent = contentInput.value.length;
+      });
+    }
+
+    if (postForm) {
+      postForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const title = titleInput.value.trim();
+        const description = contentInput.value.trim();
+
+        if (!title || !description) {
+          alert("Please fill in both title and description.");
+          return;
+        }
+
+        const {
+          data: { user },
+          error: userError,
+        } = await supabaseClient.auth.getUser();
+
+        if (userError || !user) {
+          alert("You must be logged in to post.");
+          return;
+        }
+
+        const { data, error } = await supabaseClient.from("posts").insert([
+          {
+            user_id: user.id,
+            title: title,
+            description: description,
+          },
+        ]);
+
+        if (error) {
+          alert("Error posting: " + error.message);
+        } else {
+          alert("Post created successfully!");
+          window.location.href = "blogs.html";
+        }
+      });
+    }
+  }
+});
