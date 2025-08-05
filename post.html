@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Post Application</title>
-  <!-- Bootstrap CDN -->
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-  <!--Bootstrap ICON  -->
+  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 </head>
 
@@ -49,59 +49,16 @@
     </div>
   </div>
 
-
-
-  <!-- Bootstrap CDN -->
+  <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
     crossorigin="anonymous"></script>
-  <!-- SupaBase Library -->
+
+  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- JS File -->
-  <script>
-    const supabaseUrl = "https://srsupgbjukxifyfmdcep.supabase.co";
-    const supabaseKey =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyc3VwZ2JqdWt4aWZ5Zm1kY2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0Mzg3ODUsImV4cCI6MjA2NzAxNDc4NX0.-yMtzbLPOU_R10ysCz1-sDwl2B4dkvWMU7--R5Zy9Wg";
-    const client = supabase.createClient(supabaseUrl, supabaseKey);
-
-    document.getElementById("postForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const title = document.getElementById("title").value.trim();
-      const description = document.getElementById("content").value.trim();
-
-      if (!title || !description) {
-        alert("Please fill in both title and description.");
-        return;
-      }
-
-      const {
-        data: { user },
-        error: userError,
-      } = await client.auth.getUser();
-
-      if (userError || !user) {
-        alert("You must be logged in to post.");
-        return;
-      }
-
-      const { data, error } = await client.from("posts").insert([
-        {
-          user_id: user.id,
-          title: title,
-          description: description,
-        },
-      ]);
-
-      if (error) {
-        alert("Error posting: " + error.message);
-      } else {
-        alert("Post created successfully!");
-        window.location.href = "blogs.html";
-      }
-    });
-  </script>
+  <!-- Your App JS -->
+  <script src="app.js"></script>
 </body>
 
 </html>
