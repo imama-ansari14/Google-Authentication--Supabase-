@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-// ✨ POST PAGE FUNCTIONALITY
+  // ✨ POST PAGE FUNCTIONALITY
   if (path.includes("post.html")) {
     const postForm = document.getElementById("postForm");
     const titleInput = document.getElementById("title");
