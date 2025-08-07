@@ -182,8 +182,23 @@ document.addEventListener("DOMContentLoaded", () => {
             description: description,
           },
         ]);
-
-       
+        if (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error Posting",
+            text: error.message,
+          });
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "Post Created!",
+            text: "Your post was successfully added.",
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => {
+            window.location.href = "blogs.html";
+          });
+        }
       });
     }
   }
