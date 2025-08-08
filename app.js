@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            window.location.href = "blogs.html";
+            window.location.href = "allblogs.html";
           });
         }
       });
