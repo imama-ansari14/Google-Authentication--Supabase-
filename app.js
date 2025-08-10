@@ -203,3 +203,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+  // ✨ ALL BLOG FUNCTIONALITY
+if (path.includes("allblogs.html")) {
+  document.addEventListener("DOMContentLoaded", async () => {
+    const postsContainer = document.getElementById("postsContainer");
+
+    const { data: posts, error } = await supabaseClient
+      .from("posts")
+      .select("title, description, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching posts:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error loading posts",
+        text: error.message
+      });
+      return;
+    }
+
+    // Clear container before appending
+    postsContainer.innerHTML = "";
+
+    posts.forEach(post => {
+      const card = `
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">${post.title}</h5>
+              <p class="card-text">${post.description}</p>
+              <p class="text-muted small">${new Date(post.created_at).toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+      `;
+      postsContainer.innerHTML += card;
+    });
+  });
+}
