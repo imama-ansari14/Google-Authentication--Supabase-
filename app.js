@@ -203,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
 // ✨ ALL BLOG FUNCTIONALITY
 async function fetchAllBlogs() {
   try {
@@ -228,14 +229,15 @@ async function fetchAllBlogs() {
       postsContainer.innerHTML = `<p class="text-muted">No posts yet. Be the first to post!</p>`;
       return;
     }
+
     // ✅ Loop inside the function
     data.forEach(post => {
       postsContainer.innerHTML += `
-        <div class="card mb-3" style="width: 18rem; background-color:rgb(198, 198, 198)";">
+        <div class="card mb-3" style="width: 18rem; background-color:rgb(198, 198, 198);">
           <div class="card-body">
             <h5 class="card-title">${post.title}</h5>
             <h6 class="card-subtitle mb-2 text-muted">
-              Posted by: ${post.user_email || 'Anonymous'}<br>
+              Posted by: ${post.user_name || 'Anonymous'}<br>
               ${new Date(post.created_at).toLocaleString()}
             </h6>
             <p class="card-text">${post.description}</p>
