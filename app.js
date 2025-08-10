@@ -203,3 +203,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+// ✨ ALL BLOG FUNCTIONALITY
+async function fetchAllBlogs() {
+  try {
+    // ✅ Fetch from the correct table (same as your insert)
+    const { data, error } = await supabaseClient
+      .from('posts') // must match the table you insert into
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching blogs:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Unable to load blogs!',
+      });
+      return;
+    }
+
+    const postsContainer = document.getElementById('all-posts');
+    postsContainer.innerHTML = '';
+
+    if (!data || data.length === 0) {
+      postsContainer.innerHTML = `<p class="text-muted">No posts yet. Be the first to post!</p>`;
+      return;
+    }
+    // ✅ Loop through posts and show them
+    data.forEach(post => {
+      postsContainer.innerHTML += `
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">${post.title}</h5>
+            <p class="card-text">${post.description}</p>
+            <p class="text-muted small">
+              Posted by: ${post.user_email || 'Anonymous'} on 
+              ${new Date(post.created_at).toLocaleString()}
+            </p>
+          </div>
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+    });
+  }
+}
+// ✅ Run automatically when on allblogs.html
+if (window.location.pathname.includes('allblogs.html')) {
+  fetchAllBlogs();
+}
